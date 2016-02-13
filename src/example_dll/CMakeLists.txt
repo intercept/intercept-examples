@@ -17,7 +17,7 @@ SOURCE_GROUP("example_dll" FILES ${INTERCEPT_EXAMPLE_SOURCES})
 
 add_library( ${INTERCEPT_EXAMPLE_NAME} SHARED ${INTERCEPT_EXAMPLE_SOURCES})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} "intercept/include/")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/intercept/include)
 target_link_libraries(${INTERCEPT_EXAMPLE_NAME} ${CMAKE_SOURCE_DIR}/intercept/lib/intercept_client.lib)
 
 target_link_libraries(${INTERCEPT_EXAMPLE_NAME} ${LINK_LIBS})
