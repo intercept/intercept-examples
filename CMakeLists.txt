@@ -21,6 +21,6 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/win32/")
 SET(CMAKE_INCLUDE_CURRENT_DIR ON) 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-add_subdirectory(src/example_dll)
+add_subdirectory(src)
 
 
