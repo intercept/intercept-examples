@@ -17,3 +17,4 @@ if(NOT INTERCEPT_LIB_PATH)
 endif()
 
 add_subdirectory(example_dll)
+add_subdirectory(aps_demo)
