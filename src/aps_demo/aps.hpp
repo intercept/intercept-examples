@@ -15,7 +15,7 @@ namespace aps_demo {
 
         void engage(types::object &projectile_);
 
-
+        static std::list<aps> aps_systems;
     protected:
         types::object _vehicle;
         std::list<types::object> _tracking; // the list of projectiles currently being tracked

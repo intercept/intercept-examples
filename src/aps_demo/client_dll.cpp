@@ -8,15 +8,24 @@
 #include "client\client.hpp"
 #include "client\pointers.hpp"
 #include "client\sqf\uncategorized.hpp"
+#include "aps.hpp"
 
 INITIALIZE_EASYLOGGINGPP
+
+#define DLLEXPORT __declspec(dllexport)
+
+extern "C" {
+    DLLEXPORT void  __cdecl add_vehicle(game_value &this_);
+}
 
 int __cdecl intercept::api_version() {
     return 1;
 }
 
 void __cdecl intercept::on_frame() {
-
+    for (auto aps_system : aps_demo::aps::aps_systems) {
+        aps_system.on_frame();
+    }
 }
 
 void __cdecl intercept::post_init() {
@@ -37,6 +46,12 @@ void __cdecl intercept::fired(
     object &projectile_) 
 {
 
+}
+
+void __cdecl add_vehicle(game_value &this_) {
+    aps_demo::aps new_aps(this_[0]);
+    aps_demo::aps::aps_systems.push_back(new_aps);
+    LOG(INFO) << "Registering Vehicle";
 }
 
 
