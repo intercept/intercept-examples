@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.0)
 
-set(INTERCEPT_EXAMPLE_NAME "example_dll")
+set(INTERCEPT_EXAMPLE_NAME "laser_demo")
 
 add_definitions(/DINTERCEPT_NO_THREAD_SAFETY)
 
