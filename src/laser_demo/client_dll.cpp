@@ -116,7 +116,7 @@ laser_return shoot_cone(const vector3 &pos_, const vector3 &vec_, float divergen
             bucket.push_back(std::tuple<vector3, vector3>{ test_point.intersect_pos_asl, test_point.surface_normal });
 
             auto check_point = points.begin();
-            float test_distance = (pos_.distance(test_point.intersect_pos_asl) / 1000.0f) * (divergence_ * 8.0f);
+            float test_distance = (pos_.distance(test_point.intersect_pos_asl) / 1000.0f) * (divergence_ * 16.0f);
             while(check_point != points.end()) {
                 if (test_point.intersect_pos_asl.distance(check_point->intersect_pos_asl) < test_distance) {
                     bucket.push_back(std::tuple<vector3, vector3>{check_point->intersect_pos_asl, check_point->surface_normal});
