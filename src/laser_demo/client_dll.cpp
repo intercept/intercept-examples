@@ -155,17 +155,18 @@ int __cdecl intercept::api_version() {
 }
 
 void __cdecl intercept::on_frame() {
+    auto start = std::chrono::steady_clock::now();
     vector3 pos = sqf::eye_pos(sqf::player());
     auto res = shoot_cone(pos, sqf::eye_direction(sqf::player()));
-    
+    auto end = std::chrono::steady_clock::now();
+    auto diff = end - start;
     std::stringstream ss;
-    ss << "Longest: " << res.longest << "m Shortest: " << res.shortest << "m Total: " << res.laser_spots.size();
+    ss << "Longest: " << res.longest << "m Shortest: " << res.shortest << "m Time: " << std::chrono::duration <double, std::milli>(diff).count() << "ms";
     for (auto spot : res.laser_spots) {
         sqf::draw_line_3d(sqf::asl_to_atl(pos), sqf::asl_to_atl(spot.position_asl), { 0,1,0,1 });
         sqf::draw_line_3d(sqf::asl_to_atl(spot.position_asl), sqf::asl_to_atl(spot.position_asl + spot.normal), { 1,0,0,1 });
     }
     sqf::side_chat(sqf::player(), ss.str());
-    
 }
 
 
