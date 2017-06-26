@@ -38,11 +38,11 @@ void __cdecl intercept::mission_stopped() {
 
 void __cdecl intercept::fired(
     object &unit_,
-    rv_string &weapon_,
-    rv_string &muzzle_,
-    rv_string &mode_,
-    rv_string &ammo_,
-    rv_string &magazine,
+    r_string weapon_,
+    r_string muzzle_,
+    r_string mode_,
+    r_string ammo_,
+    r_string magazine,
     object &projectile_) 
 {
 

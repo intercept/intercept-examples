@@ -73,18 +73,17 @@ void __cdecl intercept::mission_stopped() {
 }
 
 void __cdecl intercept::fired(
-    object &unit_,
-    rv_string &weapon_,
-    rv_string &muzzle_,
-    rv_string &mode_,
-    rv_string &ammo_,
-    rv_string &magazine,
-    object &projectile_) 
+	object &unit_,
+	r_string weapon_,
+	r_string muzzle_,
+	r_string mode_,
+	r_string ammo_,
+	r_string magazine,
+	object &projectile_)
 {
     bullets.push_back(projectile_);
     lines[projectile_].push_back(intercept::sqf::get_pos(projectile_));
 }
-
 
 void Init(void) {
     el::Configurations conf;
