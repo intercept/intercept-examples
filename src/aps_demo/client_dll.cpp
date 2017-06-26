@@ -5,9 +5,9 @@
 
 #include "intercept.hpp"
 #include "logging.hpp"
-#include "client\client.hpp"
-#include "client\pointers.hpp"
-#include "client\sqf\uncategorized.hpp"
+#include "client/client.hpp"
+#include "client/pointers.hpp"
+#include "client/sqf/uncategorized.hpp"
 #include "aps.hpp"
 
 INITIALIZE_EASYLOGGINGPP
@@ -37,13 +37,13 @@ void __cdecl intercept::mission_stopped() {
 }
 
 void __cdecl intercept::fired(
-    object &unit_,
-    r_string weapon_,
-    r_string muzzle_,
-    r_string mode_,
-    r_string ammo_,
-    r_string magazine,
-    object &projectile_) 
+    object&  /*unit_*/,
+    r_string /*weapon_*/,
+    r_string /*muzzle_*/,
+    r_string /*mode_*/,
+    r_string /*ammo_*/,
+    r_string /*magazine*/,
+    object&  projectile_) 
 {
 
 }
@@ -55,7 +55,7 @@ void __cdecl add_vehicle(game_value &this_) {
 }
 
 
-void Init(void) {
+void Init() {
     el::Configurations conf;
 
     conf.setGlobally(el::ConfigurationType::Filename, "logs/intercept_aps_demo.log");
@@ -71,14 +71,14 @@ void Init(void) {
     LOG(INFO) << "Intercept APS Demo DLL Loaded";
 }
 
-void Cleanup(void) {
+void Cleanup() {
 
 }
 
 
-BOOL APIENTRY DllMain(HMODULE hModule,
+BOOL APIENTRY DllMain(HMODULE /*hModule*/,
     DWORD  ul_reason_for_call,
-    LPVOID lpReserved
+    LPVOID /*lpReserved*/
     )
 {
     switch (ul_reason_for_call)

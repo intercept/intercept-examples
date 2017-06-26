@@ -7,11 +7,11 @@
 
 #include "intercept.hpp"
 #include "logging.hpp"
-#include "client\client.hpp"
-#include "client\pointers.hpp"
-#include "client\sqf\uncategorized.hpp"
-#include "glm\gtx\rotate_vector.hpp"
-#include "glm\gtx\polar_coordinates.hpp"
+#include "client/client.hpp"
+#include "client/pointers.hpp"
+#include "client/sqf/uncategorized.hpp"
+#include "glm/gtx/rotate_vector.hpp"
+#include "glm/gtx/polar_coordinates.hpp"
 
 #define DIVERGENCE 0.3
 
@@ -65,9 +65,9 @@ laser_return shoot_cone(const vector3 &pos_, const vector3 &vec_, float divergen
         //sqf::draw_line_3d(sqf::asl_to_atl(pos_), sqf::asl_to_atl(intersections[0].intersect_pos_asl), { 0,1,0,1 });
     }
     
-    uint32_t inner_count = (uint32_t)(count_ * 0.3f);
+    uint32_t inner_count = static_cast<uint32_t>(count_ * 0.3f);
     for (uint32_t d = 0; d < inner_count; ++d) {
-        auto rotated_vec_glm = glm::rotate(rotate_normal, DEG2RAD((360.0f / (float)inner_count)*(float)d), rotate_axis);
+        auto rotated_vec_glm = glm::rotate(rotate_normal, DEG2RAD( 360.0f / static_cast<float>(inner_count) *static_cast<float>(d)), rotate_axis);
 
         rotated_vec = vector3(rotated_vec_glm.x, rotated_vec_glm.z, rotated_vec_glm.y);
         vector3 pos2 = pos_ + ((vec_ * 1000.0f) + rotated_vec * divergence_ * 0.5f);
@@ -84,9 +84,9 @@ laser_return shoot_cone(const vector3 &pos_, const vector3 &vec_, float divergen
         }
 
     }
-    uint32_t outter_count = (uint32_t)(count_ * 0.7f);;
+    uint32_t outter_count = static_cast<uint32_t>(count_ * 0.7f);
     for (uint32_t d = 0; d < outter_count; ++d) {
-        auto rotated_vec_glm = glm::rotate(rotate_normal, DEG2RAD((360.0f / (float)outter_count)*(float)d), rotate_axis);
+        auto rotated_vec_glm = glm::rotate(rotate_normal, DEG2RAD(360.0f / static_cast<float>(outter_count) *static_cast<float>(d)), rotate_axis);
 
         rotated_vec = vector3(rotated_vec_glm.x, rotated_vec_glm.z, rotated_vec_glm.y);
         vector3 pos2 = pos_ + ((vec_ * 1000.0f) + rotated_vec * divergence_);
@@ -121,9 +121,8 @@ laser_return shoot_cone(const vector3 &pos_, const vector3 &vec_, float divergen
                 if (test_point.intersect_pos_asl.distance(check_point->intersect_pos_asl) < test_distance) {
                     bucket.push_back(std::tuple<vector3, vector3>{check_point->intersect_pos_asl, check_point->surface_normal});
                     points.erase(check_point++);
-                }
-                else {
-                    check_point++;
+                } else {
+                    ++check_point;
                 }
             }
             buckets.push_back(bucket);
@@ -140,9 +139,9 @@ laser_return shoot_cone(const vector3 &pos_, const vector3 &vec_, float divergen
             normal = normal + std::get<1>(point);
         }
         laser_spot new_spot;
-        new_spot.position_asl = center / (float)spot.size();
-        new_spot.normal = normal / (float)spot.size();
-        new_spot.ratio = (float)spot.size() / (float)(count_ + 1);
+        new_spot.position_asl = center / static_cast<float>(spot.size());
+        new_spot.normal = normal / static_cast<float>(spot.size());
+        new_spot.ratio = static_cast<float>(spot.size()) / static_cast<float>(count_ + 1);
         spots.push_back(new_spot);
     }
 
@@ -179,7 +178,7 @@ void __cdecl intercept::mission_stopped() {
 
 
 
-void Init(void) {
+void Init() {
     el::Configurations conf;
 
     conf.setGlobally(el::ConfigurationType::Filename, "logs/intercept_laser_demo.log");
@@ -195,14 +194,14 @@ void Init(void) {
     LOG(INFO) << "Intercept Example DLL Loaded";
 }
 
-void Cleanup(void) {
+void Cleanup() {
 
 }
 
 
-BOOL APIENTRY DllMain(HMODULE hModule,
+BOOL APIENTRY DllMain(HMODULE /*hModule*/,
     DWORD  ul_reason_for_call,
-    LPVOID lpReserved
+    LPVOID /*lpReserved*/
     )
 {
     switch (ul_reason_for_call)

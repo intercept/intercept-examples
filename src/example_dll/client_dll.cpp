@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <cstdint>
 #include <atomic>
+#include <chrono>
+
+using namespace std::literals::chrono_literals;
 
 #include "intercept.hpp"
 #include "logging.hpp"
-#include "client\client.hpp"
-#include "client\pointers.hpp"
-#include "client\sqf\uncategorized.hpp"
+#include "client/client.hpp"
+#include "client/pointers.hpp"
+#include "client/sqf/uncategorized.hpp"
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -22,12 +25,12 @@ int __cdecl intercept::api_version() {
 }
 
 void __cdecl intercept::on_frame() {
-    intercept::sqf::rv_color color{ 1.0f, 0.0f, 0.0f, 1.0f };
+    rv_color color{ 1.0f, 0.0f, 0.0f, 1.0f };
     for (auto bullet : lines) {
         auto point = bullet.second.begin();
         while (point != bullet.second.end()) {
             vector3 &pos1 = *point;
-            point++;
+            ++point;
             if (point != bullet.second.end()) {
                 vector3 &pos2 = *point;
                 intercept::sqf::draw_line_3d(pos1, pos2, color);
@@ -57,7 +60,7 @@ void test_thread_func() {
                 }
             }
         }
-        sleep(100);
+        std::this_thread::sleep_for(100ms);
     }
     LOG(DEBUG) << "SHUT DOWN TEST THREAD";
 }
@@ -73,19 +76,19 @@ void __cdecl intercept::mission_stopped() {
 }
 
 void __cdecl intercept::fired(
-	object &unit_,
-	r_string weapon_,
-	r_string muzzle_,
-	r_string mode_,
-	r_string ammo_,
-	r_string magazine,
-	object &projectile_)
-{
+    object&  /*unit_*/,
+    r_string /*weapon_*/,
+    r_string /*muzzle_*/,
+    r_string /*mode_*/,
+    r_string /*ammo_*/,
+    r_string /*magazine*/,
+    object&  projectile_) {
+
     bullets.push_back(projectile_);
     lines[projectile_].push_back(intercept::sqf::get_pos(projectile_));
 }
 
-void Init(void) {
+void Init() {
     el::Configurations conf;
 
     conf.setGlobally(el::ConfigurationType::Filename, "logs/intercept_example_dll.log");
@@ -101,14 +104,14 @@ void Init(void) {
     LOG(INFO) << "Intercept Example DLL Loaded";
 }
 
-void Cleanup(void) {
+void Cleanup() {
 
 }
 
 
-BOOL APIENTRY DllMain(HMODULE hModule,
+BOOL APIENTRY DllMain(HMODULE /*hModule*/,
     DWORD  ul_reason_for_call,
-    LPVOID lpReserved
+    LPVOID /*lpReserved*/
     )
 {
     switch (ul_reason_for_call)

@@ -7,10 +7,10 @@ using namespace intercept;
 namespace aps_demo {
     class aps {
     public:
-        aps(types::object vehicle_);
+        explicit aps(types::object vehicle_);
         ~aps();
 
-        void on_frame();
+        void on_frame() const;
         void add_track(types::object &projectile_);
 
         void engage(types::object &projectile_);
