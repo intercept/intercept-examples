@@ -69,7 +69,7 @@ void __cdecl intercept::post_init() {
     stop_thread = false;
     test_thread = std::thread(&test_thread_func);
 }
-void __cdecl intercept::mission_stopped() {
+void __cdecl intercept::mission_ended() {
     stop_thread = true;
     test_thread.join();
     lines.clear();

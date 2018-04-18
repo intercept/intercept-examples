@@ -172,7 +172,7 @@ void __cdecl intercept::on_frame() {
 void __cdecl intercept::post_init() {
 
 }
-void __cdecl intercept::mission_stopped() {
+void __cdecl intercept::mission_ended() {
 
 }
 

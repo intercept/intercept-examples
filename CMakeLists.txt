@@ -15,13 +15,8 @@ else()
 	set(INTERCEPT_LINK_TYPE "dynamic")
 endif()
 
-if("${CMAKE_GENERATOR}" MATCHES "Visual Studio 15 2017 Win64")
-	set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /std:c++latest" )
+if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
 	set( USE_64BIT_BUILD ON)
-elseif("${CMAKE_GENERATOR}" MATCHES "Visual Studio 15 2017")
-	set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /std:c++latest" )
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
-	message(FATAL_ERROR "ERROR: You need a C++17 compatible compiler")
 endif()
 
 message("GENERATOR USED: '${CMAKE_GENERATOR}'")
@@ -44,4 +39,5 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_subdirectory(src)
 
-
+#We only have debug and Release with debug info.
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
